@@ -1,0 +1,118 @@
+"use strict";
+var _self = (typeof(global) !== 'undefined' ? global : self);
+_self.aw = _self.aw || {};
+
+aw.Sandbox = (function() {
+    var ERROR_OFFSET = 22;
+    var TIMEOUT = 2000;
+
+    var Sandbox = function(sandbox) {
+        var self = this;
+
+        function init(code) {
+            self.code = code;
+        }
+        self.init = init;
+
+        function compile(code) {
+            return (function(code) {
+                try {
+                    return eval(code);
+                } catch (e) {
+                    return (function() { var global = {}; return { main: function() { global.ops.push('error', { msg: e.message }); }, global: global}; })()
+                }
+            })(code);
+        }
+
+        function recv(e) {
+            if (self.timer) {
+                clearTimeout(self.timer);
+                self.timer = null;
+            }
+            if (self.callback) {
+                self.callback(JSON.parse(e.data));
+                self.callback = null;
+            }
+        }
+
+        function recvSandbox(e) {
+            var msg = JSON.parse(e.data);
+            if (msg.code) {
+                self.logic = compile(msg.code);
+            }
+            if (msg.invoke) {
+                postMessage(JSON.stringify(invokeSandbox(msg.invoke)));
+            }
+        }
+
+        function send(msg) {
+            self.worker.postMessage(msg);
+        }
+
+        function invoke(ctx, callback) {
+            self.callback = callback;
+            var msg = { invoke: ctx };
+            if (self.code) {
+                msg.code = self.code;
+                self.code = null;
+            }
+            self.timer = setTimeout(function() {
+                self.worker.terminate();
+                self.timer = null;
+                if (self.callback) {
+                    self.callback(null);
+                    self.callback = null;
+                }
+            }, TIMEOUT);
+            send(JSON.stringify(msg));
+        }
+        self.invoke = invoke;
+
+        function invokeSandbox(ctx) {
+            self.logic.global.ops = [];
+            try {
+                self.logic.main.call(ctx);
+            } catch (e) {
+                self.logic.global.ops = ['error', { msg: e.message, line: (0 | e.stack.match(/<anonymous>:([0-9]+):[0-9]+/)[1]) - ERROR_OFFSET }];
+            }
+            return self.logic.global.ops;
+        }
+
+        self.sandbox = !!sandbox;
+        self.recv = self.sandbox ? recvSandbox : recv;
+
+        if (self.sandbox) {
+        } else {
+            self.worker = new Worker('./js/sandbox.js');
+            self.worker.onmessage = self.recv;
+        }
+    }
+
+    Sandbox.prototype = {
+        __name: 'Sandbox',
+        constructor: Sandbox,
+
+        destroy: function() {
+            var self = this;
+            if (self.worker) {
+                self.worker.terminate();
+                self.worker = null;
+            }
+        }
+    }
+
+    Sandbox.winCache = [];
+    Sandbox.cache = [];
+    return Sandbox;
+})();
+
+(function() {
+    var inSandbox = !self.window, Sandbox = aw.Sandbox;
+    if (inSandbox) {
+        var sandbox = new Sandbox(true);
+        onmessage = function(e) {
+            sandbox.recv(e);
+        };
+    }
+
+})();
