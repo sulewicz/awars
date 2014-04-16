@@ -3,8 +3,6 @@
         'common/utils/constants.js',
         'common/utils/js.js',
         'client/controller/map_editor/map_editor.js',
-        'client/controller/multiplayer/connector.js',
-        'client/controller/multiplayer/multiplayer.js',
         'client/controller/simulator/context_factory.js',
         'client/controller/simulator/game.js',
         'client/controller/simulator/simulator.js',

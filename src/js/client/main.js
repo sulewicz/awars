@@ -25,15 +25,10 @@ window.onload = function() {
         }
     }
     
-    function multiplayer() {
-        var multiplayer = new aw.Multiplayer();
-        multiplayer.setup();
-    }
     var background = new aw.BackgroundUi();
     background.init();
     
-    //editor();
-    multiplayer();
+    editor();
 }
 
 
