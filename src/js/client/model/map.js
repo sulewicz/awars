@@ -116,11 +116,10 @@ aw.Map = (function() {
         
         addObject: function(obj) {
             var self = this;
-            if (!self.canAddObject(obj.x, obj.y)) {
-                throw "Cannot add object to " + obj.x + "x" + obj.y;
+            if (self.canAddObject(obj.x, obj.y)) {
+                self.dynamic_objects.push(obj);
+                aw.js.emit(self, MAP_MUTATED_EVENT, 'added', obj);
             }
-            self.dynamic_objects.push(obj);
-            aw.js.emit(self, MAP_MUTATED_EVENT, 'added', obj);
         },
         
         deleteObject: function(obj) {
@@ -200,7 +199,8 @@ aw.Map = (function() {
             
             self.max_teams = constructorsMap.length;
             if (self.max_teams < 2 || self.max_teams > 4) {
-                throw "Invalid number of teams";
+                alert("Invalid number of teams");
+                return false;
             }
             return true;
         },
