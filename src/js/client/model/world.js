@@ -1,6 +1,6 @@
 "use strict";
-var _self = (typeof(global) !== 'undefined' ? global : self);
-_self.aw = _self.aw || {};
+
+self.aw = self.aw || {};
 
 aw.World = (function() {
     var FRONT = 0, RIGHT = 1, BACK = 2, LEFT = 3;

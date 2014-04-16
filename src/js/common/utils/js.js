@@ -1,6 +1,6 @@
 "use strict";
-var _self = (typeof(global) !== 'undefined' ? global : self);
-_self.aw = _self.aw || {};
+
+window.aw = window.aw || {};
 
 aw.js = aw.js || (function() {
     function toArray(a) {

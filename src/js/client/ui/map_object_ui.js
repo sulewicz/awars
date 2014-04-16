@@ -1,6 +1,6 @@
 "use strict";
-var _self = (typeof(global) !== 'undefined' ? global : self);
-_self.aw = _self.aw || {};
+
+self.aw = self.aw || {};
 
 aw.MapObjectUi = (function() {
     var TEAM_COLOR = ["#FF0000", "#00FF00", "#9c40b0", "#FFFF00"];

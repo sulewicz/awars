@@ -1,6 +1,6 @@
 "use strict";
-var _self = (typeof(global) !== 'undefined' ? global : self);
-_self.aw = _self.aw || {};
+
+self.aw = self.aw || {};
 
 aw.MapEditorToolkitUi = (function() {
     var MapEditorToolkitUi = function() {

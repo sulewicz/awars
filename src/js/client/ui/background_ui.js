@@ -1,6 +1,7 @@
 "use strict";
 var _self = (typeof(global) !== 'undefined' ? global : self);
-_self.aw = _self.aw || {};
+
+self.aw = self.aw || {};
 
 aw.BackgroundUi = (function() {
     var TIMEOUT = 50, CHAR_WIDTH = 8, LINE_HEIGHT = 16, CENTER_WIDTH = 846, CENTER_COL_WIDTH = parseInt(CENTER_WIDTH / CHAR_WIDTH);
