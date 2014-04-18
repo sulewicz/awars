@@ -2,6 +2,7 @@
     var scripts = [
         'common/utils/constants.js',
         'common/utils/js.js',
+        'client/utils/codemirror.js',
         'client/controller/map_editor/map_editor.js',
         'client/controller/simulator/context_factory.js',
         'client/controller/simulator/game.js',
@@ -31,7 +32,6 @@
         'client/ui/simulator_control_ui.js',
         'client/ui/teams_tab_ui.js',
         'client/ui/users_list_ui.js',
-        'client/utils/codemirror.js',
         'client/utils/dom.js',
         'client/utils/utils.js',
         'client/main.js',

@@ -3,6 +3,8 @@
 self.aw = self.aw || {};
 
 aw.CodeEditorUi = (function() {
+    var fs = require('fs');
+
     var POPUP = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
         + '<html xmlns="http://www.w3.org/1999/xhtml" lang="en"> '
         + '<head> '
@@ -75,11 +77,21 @@ aw.CodeEditorUi = (function() {
                     value: SAMPLE_CODE, 
                     lineNumbers: true, 
                     autofocus: true,
-                    extraKeys: {
-                        "Ctrl-Space": function(cm) { CodeMirror.simpleHint(cm, CodeMirror.javascriptHint, null, { globals: self.globals, locals: self.locals }); },
-                        "'.'": function(cm) { CodeMirror.simpleHint(cm, CodeMirror.javascriptHint, '.', { globals: self.globals, locals: self.locals }); }
-                    }
+                    mode: 'javascript'
                 });
+
+            fs.readFile('js/client/ui/ecma5.json', 'utf8', function (err, data) {
+                var server = new CodeMirror.TernServer({defs: [JSON.parse(data)]});
+                self.code_mirror_editor.setOption("extraKeys", {
+                  "Ctrl-Space": function(cm) { server.complete(cm); },
+                  "Ctrl-I": function(cm) { server.showType(cm); },
+                  "Alt-.": function(cm) { server.jumpToDef(cm); },
+                  "Alt-,": function(cm) { server.jumpBack(cm); },
+                  "Ctrl-Q": function(cm) { server.rename(cm); },
+                  "Ctrl-.": function(cm) { server.selectName(cm); }
+                })
+                self.code_mirror_editor.on("cursorActivity", function(cm) { server.updateArgHints(cm); }); 
+            });
             self.code_mirror_scroll = self.code_editor_node.getElementsByClassName("CodeMirror-scroll")[0];
             
             self.code_mirror_editor.on("change", function() {
@@ -208,17 +220,16 @@ aw.CodeEditorUi = (function() {
 
         switchTo: function(i) {
             var self = this;
-            if (!self.history_cache[i]) {
-                self.history_cache[i] = self.code_mirror_editor.makeHistory();
-                self.code_mirror_editor.view.history = self.history_cache[i];
-            }
-            if (i !== self.current_code) {
+            if (i !== self.current_code) {                
                 self.ignoreChange = true;
                 self.code_cache[self.current_code] = self.code_mirror_editor.getValue();
+                self.history_cache[self.current_code] = self.code_mirror_editor.doc.getHistory();
                 self.selection_cache[self.current_code] = self.code_select_node.value;
                 self.current_code = i;
                 self.code_mirror_editor.setValue(self.code_cache[self.current_code])
-                self.code_mirror_editor.view.history = self.history_cache[i];
+                if (self.history_cache[self.current_code]) {
+                    self.code_mirror_editor.doc.setHistory(self.history_cache[self.current_code]);
+                }
 
                 self.code_select_node.value = self.selection_cache[self.current_code];
                 self.code_header_icon.style.backgroundPosition = (-aw.utils.TILE_SIZE * self.current_code) + "px";
