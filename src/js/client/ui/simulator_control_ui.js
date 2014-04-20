@@ -50,7 +50,7 @@ aw.SimulatorControlUi = (function() {
         },
 
         updateStepMode: function(mode) {
-            var self = this, LABELS = ['Step Machine', 'Step Team', 'Step All'];
+            var self = this, LABELS = ['Step Robot', 'Step Team', 'Step All'];
             self.step_mode_btn_node.innerHTML = LABELS[mode];
         }
     }
