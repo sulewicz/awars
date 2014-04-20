@@ -6,6 +6,11 @@ Main goal of the project is to create a multiplayer game for programmers entirel
 First part of the project, the *Simulator*, allows the player to simulate the gameplay and test how the created AI behaves. It is also a nice sandbox that allows the player to tweak and improve his code.
 Server-side, the second part of the project, is still in progress.
 
+#### How to run
+
+This project uses [node-webkit](https://github.com/rogerwang/node-webkit). To run the app you will have to download the node-webkit binary and launch it with the *src* directory as a parameter (as it contains package.json file).
+Packaged binaries of AciiWars will be available soon.
+
 #### How to Play
 
 The main goal of the game is to code a team of robots that will help them achieve victory. Your team of robots can win in two ways: destroy all other machines or destroy their constructors, which will instruct the machines to self-destruct!
