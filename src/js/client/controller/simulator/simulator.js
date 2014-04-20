@@ -59,7 +59,6 @@ aw.Simulator = (function() {
             self.registerEditorCallbacks();
             self.registerTeamsTabCallbacks();
             self.ui_map.repaint();
-            self.updateCodeList();
 
             dom.disable(self.ui_control.start_btn_node, self.ui_control.pause_btn_node, self.ui_control.step_btn_node, self.ui_control.step_mode_btn_node, self.ui_control.reset_btn_node);
 
@@ -104,16 +103,23 @@ aw.Simulator = (function() {
             
             js.reg(ui_editor, aw.CodeEditorUi.CODE_CHANGED_EVENT, js.bind(self.codeChanged, self));
             
-            ui_editor.code_select_node.addEventListener('change', function(e) {
+            dom.registerClick(ui_editor.code_save_btn, function(e) {
+                self.saveCode(ui_editor.getFileName());
+            });
+            dom.registerClick(ui_editor.code_save_as_btn, function(e) {
+                self.saveCode(null);
+            });
+            dom.registerClick(ui_editor.code_load_btn, function(e) {
                 self.loadCode();
-                e.preventDefault();
             });
-            dom.registerClick(ui_editor.code_save_node, function(e) {
-                self.saveCode();
-            });
-            dom.registerClick(ui_editor.code_delete_node, function(e) {
-                self.deleteCode();
-            });
+
+            ui_editor.save_file_node.addEventListener('change', function() {
+                self.saveCode(this.value);
+            }, true);
+
+            ui_editor.open_file_node.addEventListener('change', function() {
+                self.loadCode(this.value);
+            }, true);
         },
 
         registerTeamsTabCallbacks: function() {
@@ -148,62 +154,37 @@ aw.Simulator = (function() {
             }
         },
 
-        updateCodeList: function() {
-            var self = this;
-            if (!self.ui_code_editor.code_names) {
-                var codeString = localStorage.getItem('aw_code');
-                if (codeString) {
-                    self.ui_code_editor.code_names = codeString.split('|');
-                } else {
-                    self.ui_code_editor.code_names = [];
-                }
-            }
-            self.ui_code_editor.repaintCodeList();
-        },
+        loadCode: function(filename) {
+            var self = this, ui = self.ui_code_editor, dom = aw.dom;
+            if (filename) {
+                fs.readFile(filename, function(err, data) {
+                    if (err) {
+                      alert('Could not read file "' + filename + '": ' + err);
+                      return;
+                    }
 
-        loadCode: function() {
-            var self = this, name = self.ui_code_editor.code_select_node.value;
-            if (name) {
-                self.ui_code_editor.code_mirror_editor.setValue(localStorage.getItem('aw_code_' + name));
+                    ui.setCode(String(data));
+                    ui.setFileName(filename);
+                  });
+            } else {
+                dom.triggerEvent(ui.open_file_node, 'click');
             }
         },
 
-        saveCode: function() {
-            var self = this;
-            new aw.DialogUi({msg: 'Enter code record name:', input: true, value: self.ui_code_editor.code_select_node.value, cancel: true, ok: function(name) {
-                if (!name || name.indexOf('|') >= 0) {
-                    new aw.DialogUi({msg: 'Invalid name!', ok: true}).show();
-                    return;
-                }
-                
-                function save() {
-                    localStorage.setItem('aw_code', self.ui_code_editor.code_names.join('|'));
-                    localStorage.setItem('aw_code_' + name, self.ui_code_editor.code_mirror_editor.getValue());
-                    self.ui_code_editor.repaintCodeList(name);
-                }
-                if (self.ui_code_editor.code_names.indexOf(name) >= 0) {
-                    new aw.DialogUi({msg: 'Are you sure you want to override the code?', cancel: true, ok: function() {
-                        save();
-                    }}).show();
-                } else {
-                    self.ui_code_editor.code_names.push(name);
-                    save();
-                }
-                
-            }}).show();
-            
-        },
+        saveCode: function(filename) {
+            var self = this, ui = self.ui_code_editor, dom = aw.dom;
+            if (filename) {
+                fs.writeFile(filename, ui.getCode(), function(err) {
+                    if (err) {
+                      alert('Could not write to file "' + filename + '": ' + err);
+                      return;
+                    }
 
-        deleteCode: function() {
-            var self = this, name = self.ui_code_editor.code_select_node.value, code_names = self.ui_code_editor.code_names;
-            if (name) {
-                new aw.DialogUi({msg: 'Are you sure you want to delete "' + name + '"?', cancel: true, ok: function() {
-                    code_names.splice(code_names.indexOf(name), 1);
-                    localStorage.setItem('aw_code_', self.ui_code_editor.code_names.join('|'));
-                    localStorage.removeItem('aw_code_' + name)
-                    self.ui_code_editor.repaintCodeList('');
-                }}).show();
-                
+                    self.file_name = filename;
+                    ui.setFileName(path.basename(filename));
+                  });
+            } else {
+                dom.triggerEvent(ui.save_file_node, 'click');
             }
         },
 

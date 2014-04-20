@@ -428,6 +428,14 @@ a:hover.button.disabled {
     width: 110px;
 }
 
+#map_selector #map_file_name {
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 0;
+    margin: 5px;
+}
+
 /* Simulator Controls */
 #simulator_controls_node {
     position: absolute;
@@ -594,8 +602,9 @@ a:hover.button.disabled {
     display: none;
 }
 
-#simulator_code_node span.simulator_code_header_icon {
+#simulator_code_node .simulator_code_header_icon {
     background-image: url('../img/machine.png');
+    float: left;
     display: inline-block;
     width: 24px;
     height: 24px;

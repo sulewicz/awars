@@ -2,6 +2,9 @@
 
 self.aw = self.aw || {};
 
+var fs = require("fs");
+var path = require("path");
+
 aw.MapEditor = (function() {
     var SAMPLE_MAP = '0000000001100000000001111111111111111110010000000110000000100101000100001000101001000001011010000010010000010110100000100100000100001000001001011111011011111010010000000110000000100110110111111011011101101101111110110111010000000110000000100101111101101111101001000001000010000010010000010110100000100100000101101000001001010001000010001010010000000110000000100111111111111111111000000000011000000000|Junk,15,0,10;Junk,16,0,10;Junk,17,0,10;Junk,18,0,10;Junk,19,0,10;Junk,19,1,10;Junk,19,2,10;Junk,19,3,10;Junk,19,4,10;Junk,0,0,10;Junk,0,1,10;Junk,0,4,10;Junk,0,3,10;Junk,0,2,10;Junk,1,0,10;Junk,2,0,10;Junk,3,0,10;Junk,4,0,10;Junk,0,15,10;Junk,0,16,10;Junk,0,17,10;Junk,0,18,10;Junk,0,19,10;Junk,1,19,10;Junk,2,19,10;Junk,3,19,10;Junk,4,19,10;Junk,19,19,10;Junk,18,19,10;Junk,17,19,10;Junk,16,19,10;Junk,15,19,10;Junk,19,18,10;Junk,19,17,10;Junk,19,16,10;Junk,19,15,10;Constructor,5,5,0;Constructor,14,5,1;Constructor,14,14,2;Constructor,5,14,3;Junk,9,16,10;Junk,10,16,10;Junk,9,13,10;Junk,10,13,10;Junk,9,6,10;Junk,10,6,10;Junk,9,3,10;Junk,10,3,10;Junk,3,9,10;Junk,3,10,10;Junk,6,9,10;Junk,6,10,10;Junk,13,9,10;Junk,13,10,10;Junk,16,9,10;Junk,16,10,10;Junk,8,11,10;Junk,11,11,10;Junk,8,8,10;Junk,11,8,10';
     var SIMULATE_CLICKED = "simulate_clicked";
@@ -12,6 +15,7 @@ aw.MapEditor = (function() {
         self.map.deserialize(SAMPLE_MAP);
         self.ui_map = new aw.MapUi(self.map);
         self.ui_toolkit = new aw.MapEditorToolkitUi();
+        self.file_name = null;
     }
     
     MapEditor.prototype = {
@@ -36,7 +40,6 @@ aw.MapEditor = (function() {
             self.registerMapCallbacks();
             self.registerToolkitCallbacks();
             self.registerSelectorCallbacks();
-            self.updateMapsList();
             self.ui_map.repaint();
         },
         
@@ -63,87 +66,83 @@ aw.MapEditor = (function() {
         
         registerSelectorCallbacks: function() {
             var self = this, ui = self.ui_toolkit, dom = aw.dom, js = aw.js;
-            ui.map_select_node.addEventListener('change', function(e) {
+            dom.registerClick(ui.load_btn_node, function(e) {
                 self.loadMap();
             });
             dom.registerClick(ui.save_btn_node, function(e) {
-                self.saveMap();
+                self.saveMap(self.file_name);
             });
-            dom.registerClick(ui.delete_btn_node, function(e) {
-                self.deleteMap();
+            dom.registerClick(ui.save_as_btn_node, function(e) {
+                self.saveMap(null);
             });
-            dom.registerClick(ui.clean_btn_node, function(e) {
-                self.cleanMap();
+            dom.registerClick(ui.clear_btn_node, function(e) {
+                self.clearMap();
             });
             dom.registerClick(ui.simulate_btn_node, function(e) {
                 if (self.map.validate()) {
                     js.emit(self, SIMULATE_CLICKED, self.map.copy());
                 }
             });
+
+            ui.save_file_node.addEventListener('change', function() {
+                self.saveMap(this.value);
+            }, true);
+
+            ui.open_file_node.addEventListener('change', function() {
+                self.loadMap(this.value);
+            }, true);
         },
         
-        updateMapsList: function() {
-            var self = this;
-            if (!self.ui_toolkit.maps_names) {
-                var mapsString = localStorage.getItem('aw_maps');
-                if (mapsString) {
-                    self.ui_toolkit.maps_names = mapsString.split('|');
-                } else {
-                    self.ui_toolkit.maps_names = [];
-                } 
+        saveMap: function(filename) {
+            var self = this, dom = aw.dom, ui = self.ui_toolkit;
+            if (filename) {
+                fs.writeFile(filename, self.map.serialize(), function(err) {
+                    if (err) {
+                      alert('Could not write to file "' + filename + '": ' + err);
+                      return;
+                    }
+
+                    self.file_name = filename;
+                    ui.setFileName(path.basename(filename));
+                  });
+            } else {
+                dom.triggerEvent(self.ui_toolkit.save_file_node, 'click');
             }
-            self.ui_toolkit.repaintList();
         },
-        
-        saveMap: function() {
-            var self = this;
-            new aw.DialogUi({msg: 'Enter map name:', input: true, value: self.ui_toolkit.map_select_node.value, cancel: true, ok: function(name) {
-                if (!name || name.indexOf('|') >= 0) {
-                    new aw.DialogUi({msg: 'Invalid name!', ok: true}).show();
-                    return;
-                }
-                function save() {
-                    localStorage.setItem('aw_maps', self.ui_toolkit.maps_names.join('|'));
-                    localStorage.setItem('aw_map_' + name, self.map.serialize());
-                    self.ui_toolkit.repaintList(name);
-                    self.ui_map.repaint();
-                }
-                if (self.ui_toolkit.maps_names.indexOf(name) >= 0) {
-                    new aw.DialogUi({msg: 'Are you sure you want to override the code?', cancel: true, ok: function() {
-                        save();
-                    }}).show();
-                } else {
-                    self.ui_toolkit.maps_names.push(name);
-                    save();
-                }
-            }}).show();
-        },
-        
-        cleanMap: function() {
-            var self = this;
-            new aw.DialogUi({msg: 'Are you sure you want to clean the map?', cancel: true, ok: function(name) {
+
+        clearMap: function() {
+            var self = this, ui = self.ui_toolkit;
+            new aw.DialogUi({msg: 'Are you sure you want to clear the map?', cancel: true, ok: function(name) {
                 self.map.reset();
                 self.ui_map.repaint();
+                ui.setFileName(self.file_name = null);
             }}).show();
         },
         
-        loadMap: function() {
-            var self = this, name = self.ui_toolkit.map_select_node.value;
-            if (name) {
-                self.map.deserialize(localStorage.getItem('aw_map_' + name));
-                self.ui_map.repaint();
-            }
-        },
-        
-        deleteMap: function() {
-            var self = this, name = self.ui_toolkit.map_select_node.value, maps_names = self.ui_toolkit.maps_names;
-            if (name) {
-                new aw.DialogUi({msg: 'Are you sure you want to delete "' + name + '"?', cancel: true, ok: function(name) {
-                    maps_names.splice(maps_names.indexOf(name), 1);
-                    localStorage.setItem('aw_maps', self.ui_toolkit.maps_names.join('|'));
-                    localStorage.removeItem('aw_map_' + name)
-                    self.ui_toolkit.repaintList('');
-                }}).show();
+        loadMap: function(filename) {
+            var self = this, dom = aw.dom, ui = self.ui_toolkit;
+            if (filename) {
+                fs.readFile(filename, function(err, data) {
+                    if (err) {
+                      alert('Could not read file "' + filename + '": ' + err);
+                      return;
+                    }
+
+                    var mapBkp = self.map.serialize();
+                    try {
+                        self.map.deserialize(String(data));
+                    } catch (e) {
+                        debugger;
+                        alert('Error while loading map: ' + e);
+                        self.map.reset();
+                        self.map.deserialize(mapBkp);
+                        return;
+                    }
+                    self.file_name = filename;
+                    ui.setFileName(path.basename(filename));
+                  });
+            } else {
+                dom.triggerEvent(self.ui_toolkit.open_file_node, 'click');
             }
         },
         

@@ -10,8 +10,9 @@ aw.MapUi = (function() {
     var MapUi = function(map) {
         var self = this, js = aw.js;
         self.map = map;
-        self.map._ui = this;
-        aw.js.reg(self.map, aw.Map.MAP_MUTATED_EVENT, js.bind(self.mapMutated, self));
+        self.map._ui = self;
+        self.map_mutated_callback = js.bind(self.mapMutated, self);
+        aw.js.reg(self.map, aw.Map.MAP_MUTATED_EVENT, self.map_mutated_callback);
     }
 
     MapUi.prototype = {

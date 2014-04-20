@@ -2,6 +2,8 @@
 
 self.aw = self.aw || {};
 
+var path = require('path');
+
 aw.CodeEditorUi = (function() {
     var fs = require('fs');
 
@@ -38,9 +40,9 @@ aw.CodeEditorUi = (function() {
         self.current_code = 0;
         self.code_names = null;
         self.code_cache = [SAMPLE_CODE, SAMPLE_CODE, SAMPLE_CODE, SAMPLE_CODE];
+        self.code_filenames = [null, null, null, null];
         self.code_error_cache = [null, null, null, null];
         self.current_error_widget = null;
-        self.selection_cache = ['', '', '', ''];
         self.history_cache = [null, null, null, null];
         self.globals = ["test"];
     }
@@ -63,12 +65,15 @@ aw.CodeEditorUi = (function() {
             self.code_help_btn = children[1];
             self.code_minimize_btn = children[2];
             self.code_header_icon = children[3];
+            self.code_file_name_node = children[4];
             
             children = self.code_footer.children;
             self.code_resize_node = children[0];
-            self.code_select_node = children[1];
-            self.code_save_node = children[2];
-            self.code_delete_node = children[3];
+            self.code_load_btn = children[1];
+            self.code_save_btn = children[2];
+            self.code_save_as_btn = children[3];
+            self.open_file_node = children[4];
+            self.save_file_node = children[5];
             
             dom.addNode(self.simulator_code_node);
             self.code_error_node = document.createElement('div');;
@@ -138,11 +143,11 @@ aw.CodeEditorUi = (function() {
             self.code_resize_node.addEventListener('mousedown', function(e) {
                 function move(e) {
                     var x = (pos[2] + e.pageX - pos[0]), y = (pos[3] + e.pageY - pos[1]);
-                    if (x >= 400) {
+                    if (x >= 300) {
                         self.code_editor_node.style.width = x + 'px';
                         self.code_mirror_scroll.style.width = x + 'px';
                     }
-                    if (y >= 200) {
+                    if (y >= 75) {
                         self.code_editor_node.style.height = y + 'px';
                         self.code_mirror_scroll.style.height = y + 'px';
                     }
@@ -165,6 +170,8 @@ aw.CodeEditorUi = (function() {
                     self.help_win.close();
                 }
             }
+
+            self.updateHeader();
         },
 
         destroy: function() {
@@ -177,11 +184,14 @@ aw.CodeEditorUi = (function() {
             self.code_help_btn = null;
             self.code_minimize_btn = null;
             self.code_header_icon = null;
+            self.code_file_name_node = null;
             self.code_editor_node = null;
             self.code_footer = null;
-            self.code_select_node = null;
-            self.code_save_node = null;
-            self.code_delete_node = null;
+            self.code_load_btn = null;
+            self.code_save_btn = null;
+            self.code_save_as_btn = null;
+            self.open_file_node = null;
+            self.save_file_node = null;
             self.code_resize_node = null;
             self.code_mirror_editor.off("change");
             self.code_mirror_editor = null;
@@ -191,27 +201,24 @@ aw.CodeEditorUi = (function() {
 
         generateSimulatorCodeEditor: function(n) {
             // Code editor
-            var str = '<div class="simulator_code_header"><a href="javascript:void(0)" class="button simulator_code_detach"></a><a href="javascript:void(0)" class="button simulator_code_help"></a><a href="javascript:void(0)" class="button simulator_code_minimize"></a>Team <span class="simulator_code_header_icon"></span></div>'
+            var str = '<div class="simulator_code_header">'
+                + '<a href="javascript:void(0)" class="button simulator_code_detach"></a>'
+                + '<a href="javascript:void(0)" class="button simulator_code_help"></a>'
+                + '<a href="javascript:void(0)" class="button simulator_code_minimize"></a>'
+                + '<span class="simulator_code_header_icon"></span>'
+                + '<span id="simulator_code_file_name"></span>'
+                + '</div>'
                 + '<div class="simulator_code"></div>'
                 + '<div class="simulator_code_toolkit">'
                 + '<span class="simulator_code_resize"></span>'
-                + '<select class="simulator_code_selector"></select>'
+                + '<a class="button" class="simulator_code_load" href="javascript:void(0)">Load</a>'
                 + '<a class="button" class="simulator_code_save" href="javascript:void(0)">Save</a>'
-                + '<a class="button" class="simulator_code_delete" href="javascript:void(0)">Delete</a>'
+                + '<a class="button" class="simulator_code_save_as" href="javascript:void(0)">Save As</a>'
+                + '<input style="display:none;" id="code_open_file" type="file" />'
+                + '<input style="display:none;" id="code_save_file" type="file" nwsaveas />';
                 + '</div>';
 
             n.innerHTML = str;
-        },
-
-        repaintCodeList: function(sel) {
-            var self = this, node = self.code_select_node, i, len, str = '', code_names = self.code_names;
-            var nodeValue = (sel !== undefined) ? sel : node.value;
-            str += '<option value="">Select code...</option>';
-            for (i = 0, len = code_names.length; i < len; i++) {
-                str += '<option value="' + code_names[i] + '">' + code_names[i] + '</option>';
-            }
-            node.innerHTML = str;
-            node.value = nodeValue;
         },
         
         help: function() {
@@ -225,15 +232,13 @@ aw.CodeEditorUi = (function() {
                 self.ignoreChange = true;
                 self.code_cache[self.current_code] = self.code_mirror_editor.getValue();
                 self.history_cache[self.current_code] = self.code_mirror_editor.doc.getHistory();
-                self.selection_cache[self.current_code] = self.code_select_node.value;
                 self.current_code = i;
                 self.code_mirror_editor.setValue(self.code_cache[self.current_code])
                 if (self.history_cache[self.current_code]) {
                     self.code_mirror_editor.doc.setHistory(self.history_cache[self.current_code]);
                 }
 
-                self.code_select_node.value = self.selection_cache[self.current_code];
-                self.code_header_icon.style.backgroundPosition = (-aw.utils.TILE_SIZE * self.current_code) + "px";
+                self.updateHeader();
                 self.repaintError();
             }
             if (self.minimized) {
@@ -241,6 +246,13 @@ aw.CodeEditorUi = (function() {
             }
             
             self.code_mirror_editor.focus();
+        },
+
+        updateHeader: function() {
+            var self = this;
+            self.code_header_icon.style.backgroundPosition = (-aw.utils.TILE_SIZE * self.current_code) + "px";
+            var filename = self.code_filenames[self.current_code];
+            self.code_file_name_node.innerText = "Code file: [" + (filename ? path.basename(filename) : 'not saved') + "]";
         },
         
         error: function(team_no, error) {
@@ -276,6 +288,27 @@ aw.CodeEditorUi = (function() {
             self.code_cache[self.current_code] = self.code_mirror_editor.getValue();
             self.clearErrors();
             return self.code_cache;
+        },
+
+        setCode: function(code) {
+            var self = this;
+            self.code_mirror_editor.setValue(code);
+        },
+
+        getCode: function() {
+            var self = this;
+            return self.code_mirror_editor.getValue();
+        },
+
+        getFileName: function() {
+            var self = this;
+            return self.code_filenames[self.current_code];
+        },
+
+        setFileName: function(filename) {
+            var self = this;
+            self.code_filenames[self.current_code] = filename;
+            self.updateHeader();
         },
 
         minimize: function() {

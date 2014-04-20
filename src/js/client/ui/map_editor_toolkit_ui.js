@@ -22,17 +22,20 @@ aw.MapEditorToolkitUi = (function() {
             var self = this, dom = aw.dom, utils = aw.utils, children, js = aw.js;
             self.toolkit_node = dom.createNode('map_toolkit', js.bind(self.generateMapToolkit, self), 'box');
             self.buttons_nodes = self.toolkit_node.getElementsByTagName('div');
-            
             self.selector_node = dom.createNode('map_selector', self.generateMapSelector, 'box');
             children = self.selector_node.children;
-            self.map_select_node = children[0];
-            self.save_btn_node = children[1];
-            self.delete_btn_node = children[2];
-            self.clean_btn_node = children[3];
-            self.simulate_btn_node = children[4];
+            self.file_name_node = children[0];
+            self.load_btn_node = children[1];
+            self.save_btn_node = children[2];
+            self.save_as_btn_node = children[3];
+            self.clear_btn_node = children[4];
+            self.simulate_btn_node = children[5];
+            self.open_file_node = children[6];
+            self.save_file_node = children[7];
             
             dom.addNode(self.toolkit_node);
             dom.addNode(self.selector_node);
+            self.setFileName(null);
         },
         
         destroy: function() {
@@ -44,14 +47,16 @@ aw.MapEditorToolkitUi = (function() {
             
             self.selector_node.innerHTML = "";
             self.selector_node.parentNode.removeChild(self.selector_node);
-            self.map_select_node = null;
+            self.file_name_node = null;
+            self.load_btn_node = null;
             self.save_btn_node = null;
-            self.delete_btn_node = null;
-            self.clean_btn_node = null;
-            self.simulate_btn_node = null;
+            self.save_as_btn_node = null;
+            self.clear_btn_node = null;
+            self.open_file_node = null;
+            self.new_btn_node = null;
+            self.save_file_node = null;
             self.selector_node = null;
         },
-        
 
         select: function(newSel) {
             var self = this, dom = aw.dom, buttons_nodes = this.buttons_nodes;
@@ -61,6 +66,11 @@ aw.MapEditorToolkitUi = (function() {
             }
             dom.addClass(buttons_nodes[newSel], BTN_SELECTED);
             self.toolkit_selection = newSel;
+        },
+
+        setFileName: function(name) {
+            var self = this;
+            self.file_name_node.innerText = "Map file: [" + (name ? name : 'not saved') + "]";
         },
         
         getSelectedObject: function() {
@@ -96,23 +106,15 @@ aw.MapEditorToolkitUi = (function() {
             
         },
         
-        repaintList: function(sel) {
-            var self = this, map_select_node = self.map_select_node, i, len, str = '', maps_names = self.maps_names;
-            var nodeValue = (sel !== undefined) ? sel : map_select_node.value;
-            str += '<option value="">Select map...</option>';
-            for (i = 0, len = maps_names.length; i < len; i++) {
-                str += '<option value="' + maps_names[i] + '">' + maps_names[i] + '</option>';
-            }
-            map_select_node.innerHTML = str;
-            map_select_node.value = nodeValue;
-        },
-        
         generateMapSelector: function(node) {
-            node.innerHTML = '<select id="map_selector_box"></select>'
+            node.innerHTML = '<p id="map_file_name"></p>'
+                + '<a class="button" id="map_selector_load" href="javascript:void(0)">Load</a>'
                 + '<a class="button" id="map_selector_save" href="javascript:void(0)">Save</a>'
-                + '<a class="button" id="map_selector_delete" href="javascript:void(0)">Delete</a>'
-                + '<a class="button" id="map_clean" href="javascript:void(0)">Clean</a>'
-                + '<a class="button" id="map_simulate" href="javascript:void(0)">Simulate</a>';
+                + '<a class="button" id="map_selector_save_as" href="javascript:void(0)">Save As</a>'
+                + '<a class="button" id="map_selector_clear" href="javascript:void(0)">Clear</a>'
+                + '<a class="button" id="map_simulate" href="javascript:void(0)">Simulate</a>'
+                + '<input style="display:none;" id="map_open_file" type="file" />'
+                + '<input style="display:none;" id="map_save_file" type="file" nwsaveas />';
         }
     }
     return MapEditorToolkitUi;

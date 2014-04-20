@@ -50,7 +50,7 @@ aw.dom = (function() {
         createNode: function(id, method, className) {
             var ret = document.createElement('div');
             id && (ret.id = id);
-            method(ret);
+            method && method(ret);
             className && (ret.className = className);
             return ret;
         },
@@ -72,6 +72,33 @@ aw.dom = (function() {
 
         isVisible: function(node) {
             return node.style.display !== "none";
+        },
+
+        triggerEvent: function(node, eventName) {
+            var eventClass = "";
+
+            switch (eventName) {
+                case "click":
+                case "mousedown":
+                case "mouseup":
+                    eventClass = "MouseEvents";
+                    break;
+
+                case "focus":
+                case "change":
+                case "blur":
+                case "select":
+                    eventClass = "HTMLEvents";
+                    break;
+
+                default:
+                    throw "Unknown event: " + eventName;
+                    break;
+            }
+            var ev = document.createEvent(eventClass);
+            ev.initEvent(eventName, eventName == "change" ? false : true, true);
+            ev.synthetic = true;
+            node.dispatchEvent(ev, true);
         },
 
         show: function() {
