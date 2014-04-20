@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"> 
+<head> 
+  <title>Help</title> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link href="css/main.css" media="screen" rel="stylesheet" type="text/css" />
+</head> 
+<body class="help">
+    <h2>How to play</h2>
+    <p>
+        The main goal of the game is to code a team of robots that will help them achieve victory.
+        Your team of robots can win in two ways: destroy all other machines or destroy their constructors, which will instruct the machines to self-destruct!
+    </p>
+    <h2>Map objects</h2>
+    <ul>
+        <li><img src="./img/floor.png">Regular floor over which the robots can freely move.</li>
+        <li><img src="./img/wall.png">Wall is an obstacle for the robots. 
+            However every robot can melt the wall and pick up the junk which will be a left-over.
+            If the robot's team has enough resources, then it can build a wall of its own.
+        </li>
+        <li><img src="./img/constructor.png">This is where the robots are being constructed. Each team has at least one constructor.
+            Destroying all of the enemy team's constructors will cause a self-destruction of the team to which the constructors belong.
+        </li>
+        <li><img src="./img/junk.png">This is the source of all resources, which the robots can later use to replicate, repair themselves or build new walls.
+            To get more junk you can destroy enemy robots or constructors or melt the walls on the map.
+        </li>
+        <li><img src="./img/machine.png">These are our brave robots!
+        </li>
+    </ul>
+    <h2>Simulator controls</h2>
+    <ul>
+        <li><a class="button" id="simulator_start" href="javascript:void(0)">Start</a>
+            This will start the simulation! Please note that you can still edit the code while the game is running, updated code will be automatically passed to your robots!
+        </li>
+        <li><a class="button" id="simulator_pause" href="javascript:void(0)">Pause</a>
+            If you want to have a closer look on the situation you can always pause the game.
+        </li>
+        <li><a class="button" id="simulator_reset" href="javascript:void(0)">Reset</a>
+            This will cause the game to be reset. You can do this only when the game is paused or nut running. Don't worry about the code of your team!
+            Although it will cause the teams to be removed the code will still be preserved in the code editor.
+        </li>
+        <li><a class="button" id="simulator_step" href="javascript:void(0)">Step</a>
+            When the game is paused you can do a small steps of the simulation process to make it easier to debug robots behavior. You can step in three modes described below.
+        </li>
+        <li><a class="button" id="simulator_step_mode" href="javascript:void(0)">Step All</a>
+            This allows you to cycle through the step modes: Step All, Step Team, Step Machine. 
+            Step All will process all of the machines, Step Team will process all of the robots in the team of the selected robot, Step Machine will process only the selected machine.
+        </li>
+        <li><a class="button" id="simulator_edit_map" href="javascript:void(0)">Edit Map</a>
+            This allows you to exit the simulation mode and head back to map editor.
+        </li>
+    </ul>
+    <h2>Simulator widgets</h2>
+    <ul>
+        <li style="min-height: 150px;">
+            <div id="simulator_teams_node" class="box" style="min-width: 0; left: auto; top: auto; position: relative; display: inline-block; float: left; margin-right: 5px;"><table><tbody><tr><td class="simulator_teams_team"><div class="simulator_team_na" style="display: none;"><p>Slot not available</p></div><div class="simulator_team_emptySlot" style="display: none;"><p>Click to add a team.</p><a href="javascript:void(0)" class="button simulator_teams_add_team" style="background-position: 0px">+</a></div><div class="simulator_team_details" style="display: inline-block;"><div class="header"><a href="javascript:void(0)" class="button simulator_teams_edit_team"><span class="simulator_teams_icon" style="background-position: 0px"></span>Edit</a></div><div class="row"><span class="simulator_teams_key simulator_teams_health">+</span><span class="simulator_teams_value">500</span></div><div class="row"><span class="simulator_teams_key"><img src="./img/machine_ico.png"></span><span class="simulator_teams_value">0</span></div><div class="row"><span class="simulator_teams_key"><img src="./img/constructor_ico.png"></span><span class="simulator_teams_value">1</span></div><div class="row"><span class="simulator_teams_key"><img src="./img/junk_ico.png"></span><span class="simulator_teams_value">100</span></div><div class="row"><span class="simulator_teams_key"><a href="javascript:void(0)" class="button simulator_teams_add_machine"></a></span><span class="simulator_teams_value"><a href="javascript:void(0)" class="button simulator_teams_del_machine"></a></span><span class="simulator_teams_key"><a href="javascript:void(0)" class="button simulator_teams_kill_team"></a></span></div></div></td></tr></tbody></table></div>
+            This is the widget that shows you the status of the team. It contains the information about the overall health of the machines and constructors, number of gathered resources, machines and constructors.
+            It also allows you to edit the code of the team, add or remove machines or even destroy whole team.
+        </li>
+        <li style="min-height: 132px;">
+            <div id="map_viewport" class="box" style="left: auto; top: auto; position: relative; display: inline-block; float: left; margin-right: 5px;"><table><tbody><tr><td><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_floor"></div><div class="cl_floor"></div><div class="cl_floor"></div></td><td><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_wall"></div><div class="cl_wall"></div><div class="cl_wall"></div></td><td><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_floor"></div><div class="cl_floor"></div><div class="cl_floor"></div></td><td><div class="cl_wall"></div><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_wall"></div><div class="cl_wall"></div></td><td><div class="cl_wall"></div><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_wall"></div><div class="cl_wall"></div></td></tr></tbody></table><div class=" cl_object cl_junk" style="left: 78px; top: 53px;"><span>10</span></div><div class=" cl_object cl_junk" style="left: 103px; top: 53px;"><span>10</span></div><div class=" cl_object cl_machine" style="left: 28px; top: 28px; -webkit-transform: rotate(90deg); background-position: 0px 50%;"></div><div class=" cl_object cl_machine" style="left: 3px; top: 103px; -webkit-transform: rotate(180deg); background-position: 0px 50%;"></div><div class=" cl_object cl_machine" style="left: 3px; top: 28px; -webkit-transform: rotate(90deg); background-position: 0px 50%;"></div><div class=" cl_object cl_machine" style="left: 53px; top: 53px; -webkit-transform: rotate(180deg); background-position: 0px 50%;"></div></div>
+            This widget allows you to take a closer look at a particular object. Just select the machine or a constructor on the map to see its surrounding. Especially useful for Step Machine mode.
+        </li>
+    </ul>
+    <h2>How to code</h2>
+    <p>Now the most important thing: how to create an actual code?<br>
+        The language that we are using for coding is JavaScript, pure JavaScript.
+        The top most object in your code must be a function, for example:
+        <pre>
+            function() {
+                turn(RIGHT);
+                move(BACK);
+            }
+        </pre>
+        This will be the function that will be executed for all machines of your team. You are of course free to define everything you want inside the body of this function.
+    </p>
+    <h2>Machine context</h2>
+    <p>The mentioned function is executed in the context of a particular machine, so it is possible to access its properties via the <b>this</b> reference, these are the properties currently available.</p>
+    <table>
+        <tr><th>Property</th><th>Description</th><th>Values</th></tr>
+        <tr><td class="first">hp</td><td class="second">This are the current hit points of the machine. When it reaches 0 the machine blows up.</td><td class="third">0 - 100</td></tr>
+        <tr><td class="first">time</td><td class="second">This variable allows you to check the passage of time. It gets incremented every team's turn.</td><td class="third">0 - +INF</td></tr>
+        <tr><td class="first">transmissions</td><td class="second">This is an array of all the messages transmitted by your robots. The messages are strings only. If nothing is currently transmitted, the array will be empty.</td><td class="third">[m1, m2, ..., mN]</td></tr>
+        <tr><td class="first">scan_result</td><td class="second">This field is available only if the robot issues a <b>scan</b> command during his previous turn. 
+            It contains the information about objects in its surrounding, even if they are not visible. 
+            It does not contain exact coordinates though, instead only the distance from the object and direction where is it located.</td><td class="third">[<br>
+&nbsp; {object: ENEMY_MACHINE, distance: 6, dir: RIGHT},<br>
+&nbsp; {object: CONSTRUCTOR, distance: 5, dir: FRONT},<br>
+&nbsp; {object: JUNK, distance: 3, dir: BACK},<br>
+]</td></tr>
+    <tr><td class="first">machines_count</td><td class="second">Number of the machines in the robot's team.</td><td class="third">0 - 20</td></tr>
+    <tr><td class="first">resources</td><td class="second">Number of the resources available for your team.</td><td class="third">0 - +INF</td></tr>
+    <tr><td class="first">view</td><td class="second">
+        <div id="map_viewport" class="box" style="left: auto; top: auto; position: relative; display: inline-block; float: left; margin-right: 5px;"><table><tbody><tr><td><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_floor"></div><div class="cl_floor"></div><div class="cl_floor"></div></td><td><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_wall">L1</div><div class="cl_wall">L2</div><div class="cl_wall"></div></td><td><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_floor"></div><div class="cl_floor">F1</div><div class="cl_floor">F2</div></td><td><div class="cl_wall"></div><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_wall">R2</div><div class="cl_wall"></div></td><td><div class="cl_wall"></div><div class="cl_wall"></div><div class="cl_floor"></div><div class="cl_wall"></div><div class="cl_wall"></div></td></tr></tbody></table><div style="left: 78px; top: 53px;" class=" cl_object cl_floor">R1</div><div class=" cl_object cl_junk" style="left: 103px; top: 53px;"><span>10</span></div><div class=" cl_object cl_machine" style="left: 28px; top: 28px; -webkit-transform: rotate(90deg); background-position: 0px 50%;"></div><div class=" cl_object cl_machine" style="left: 3px; top: 103px; -webkit-transform: rotate(180deg); background-position: 0px 50%;"></div><div class=" cl_object cl_machine" style="left: 3px; top: 28px; -webkit-transform: rotate(90deg); background-position: 0px 50%;"></div><div class=" cl_object cl_machine" style="left: 53px; top: 53px; -webkit-transform: rotate(180deg); background-position: 0px 50%;"></div></div>
+        Object containing the field of view of your machine.
+        As an example, the object stored in the <b>view</b> field will be:<br>
+{<br>
+&nbsp; {left: [L1, L2]},<br>
+&nbsp; {front: [F1, F2]},<br>
+&nbsp; {right: [R1, R2]},<br>
+}<br>
+        Possible field values are: FLOOR, WALL, CONSTRUCTOR, ENEMY_CONSTRUCTOR, MACHINE, ENEMY_MACHINE or JUNK.
+        </td><td class="third">{<br>
+&nbsp; {left: [ENEMY_MACHINE, FLOOR]},<br>
+&nbsp; {front: [FLOOR, WALL]},<br>
+&nbsp; {right: [MACHINE, ENEMY_CONSTRUCTOR]},<br>
+}
+        </td></tr>
+    </table>
+    <h2>Global constants</h2>
+    <p>
+        Now let's describe the global constants available.
+        We can group them in the following manner:
+        <ul class="constants">
+            <li>Direction constants - used for specifying direction: <b>FRONT, RIGHT, BACK, LEFT</b>.</li>
+            <li>Map object constants - describe the map objects: <b>FLOOR, WALL, CONSTRUCTOR, ENEMY_CONSTRUCTOR, MACHINE, ENEMY_MACHINE, JUNK</b>.</li>
+            <li>Cost constants - describe the cost of an operation in resources: <b>MACHINE_COST (to create a new machine), WALL_COST (to build a new wall), REPAIR_COST (to fully fix the robot)</b>.</li>
+            <li>Value constants - describe the number of resources which will be dropped after destroying an object: <b>MACHINE_VALUE (by destroying a machine), WALL_VALUE (by melting a wall), CONSTRUCTOR_VALUE (by destroying a constructor)</b>.</li>
+            <li>Misc constants: <b>HIT_HP (hp taken by a melee hit), FIRE_HP (hp taken by a laser shot), FIRE_RANGE (range of the laser beam)</b>.</li>
+        </ul>
+    </p>
+    <h2>Global functions</h2>
+    <p>Our machines need to perform some actions, to do so we need some special functions. Please note that every machine has a number of <b>Action Points</b> per turn. The number of available <b>Action Points</b> per turn is <b>3</b>.
+       Each action costs some <b>Action Points</b>, if the number of available <b>Action Points</b> is less or equal to 0, the action will be ignored.
+       Here are the available actions:
+    </p>
+    <table>
+        <tr><th>Property</th><th>Description</th><th>Example</th><th>AP</th></tr>
+        <tr><td class="first">move</td><td class="second">Basic function used for moving the robot around the map. Possible arguments are FRONT, RIGHT, BACK or LEFT.</td><td class="third">move(FRONT);</td><td>1</td></tr>
+        <tr><td class="first">turn</td><td class="second">Basic function used for turning the robot in a particular direction. Possible arguments are FRONT, RIGHT, BACK or LEFT.</td><td class="third">turn(LEFT);</td><td>1</td></tr>
+        <tr><td class="first">melt</td><td class="second">This will command the machine to melt the wall in front of it.</td><td class="third">melt();</td><td>1</td></tr>
+        <tr><td class="first">fire</td><td class="second">Machine will fire its laser in front of it. The range of the laser are 3 tiles. One shot takes 25 HP.</td><td class="third">fire();</td><td>1</td></tr>
+        <tr><td class="first">hit</td><td class="second">Robot will do a meele attack. The range is of course one tile. One hit takes 50 HP.</td><td class="third">hit();</td><td>1</td></tr>
+        <tr><td class="first">build</td><td class="second">The machine will build a wall in front of itself, if the tile is not occupied by anything else already. Costs 5 resources.</td><td class="third">build();</td><td>2</td></tr>
+        <tr><td class="first">scan</td><td class="second">This will trigger a scan of the environment. Next turn the machine can check the result of the scan in <b>this.scan_result</b> field.</td><td class="third">scan();</td><td>2</td></tr>
+        <tr><td class="first">transmit</td><td class="second">This function will transmit a messages to fellow robots. Acceptable argument is a string only, the maximal possible length of the string is 64.</td><td class="third">transmit("message1");</td><td>1</td></tr>
+        <tr><td class="first">convert</td><td class="second">The robot will attempt to convert the enemy machine in front of it on its own side. The chances of succesfull convertion are 33%.</td><td class="third">convert();</td><td>2</td></tr>
+        <tr><td class="first">replicate</td><td class="second">If the team has enough resources, the constructor will produce a new robot. This costs 100 resources. Maximal number of machines in the team is 20. Please note that machine may not be created if all tiles around the constructor are occupied, however in such case resources won't be subtracted.</td><td class="third">replicate();</td><td>3</td></tr>
+        <tr><td class="first">repair</td><td class="second">If the team has enough resources, the machine will aut-repair itself and regain hit points. The cost of repair is 30 resources.</td><td class="third">repair();</td><td>2</td></tr>
+        <tr><td class="first">log</td><td class="second">This function is available for debug purpose only. It costs no AP and is available only in the Simulator environment (in online game this operation is a no-op). The message passed to this function will be displayed in the console widget.</td><td class="third">log("message1");</td><td>0</td></tr>
+    </table>
+    <h2>Good luck! ;)</h2>
+</body>
+</html>

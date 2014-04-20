@@ -1,0 +1,1120 @@
+/* body */
+body.main {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transform: translateZ(0);
+    margin: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+}
+
+html {
+   min-height: 100%;
+   background-repeat: no-repeat;
+   background-color: #000000;
+}
+
+#background {
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    margin: 0;
+    z-index: 0;
+    -webkit-transform: translateZ(0);
+}
+
+#background > pre {
+    margin-top: 1280px;
+    line-height: 16px;
+    color: #444;
+    font-family: monospace;
+}
+
+#background_line {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 16px;
+    background-color: #000000;
+    border-left: 9px solid #444;
+    z-index: 0;
+    -webkit-transform: translateZ(0);
+}
+
+#header {
+    display: block;
+    position: fixed;
+    font-family: monospace;
+    color: #FFFFFF;
+    width: 846px;
+    font-weight: bold;
+    top: 0;
+    left: 50%;
+    margin-left: -423px;
+    z-index: 1;
+    border-left: 2px solid #1F1F1F;
+    border-right: 2px solid #1F1F1F;
+    background-color: #000000;
+}
+
+#header > pre {
+    text-align: left;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 14px;
+    width: 320px;
+}
+
+#content {
+    display: block;
+    -webkit-transform: translateZ(0);
+    top: 130px;
+    background-color: #000000;
+    bottom: 0;
+    left: 50%;
+    margin-left: -423px;
+    width: 846px;
+    text-align: left;
+    position: fixed;
+    z-index: 1;
+    border-left: 2px solid #1F1F1F;
+    border-right: 2px solid #1F1F1F;
+}
+
+/* Common */
+.box {
+    border: 2px outset #AAAAAA;
+    display: inline-block;
+    background-color: #000000;
+}
+
+body.main input {
+    font-family: monospace;
+    background-color: #000000;
+    border: 1px outset #AAAAAA;
+    color: #FFFFFF;
+}
+
+body.main select {
+    font-family: monospace;
+    background-color: #000000;
+    border: 1px outset #AAAAAA;
+    color: #FFFFFF;
+    height: 22px;
+}
+
+a.button {
+    display: inline-block;
+    -webkit-user-select: none;
+    cursor: pointer;
+    border: 1px outset #AAAAAA;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 12px;
+    margin: 1px;
+    padding: 2px;
+    line-height: 16px;
+    text-decoration: none;
+}
+a:hover.button.down {
+    font-size: 10px;
+}
+a:hover.button {
+    border: 1px outset #FFFFFF;
+    font-weight: bold;
+}
+a.button.disabled {
+    border: 1px outset #777777;
+    color: #888888;
+    cursor: default;
+}
+a:hover.button.disabled {
+    -webkit-transform: none;
+}
+/* Map UI */
+#map {
+    position: absolute;
+    display: inline-block;
+    padding: 2px;
+    left: 0;
+    top: 0;
+}
+
+#map table {
+    background-color: black;
+    border: 0;
+    padding: 0;
+    border-spacing: 0;
+    border-left: 1px outset black;
+    border-top: 1px outset black;
+}
+
+#map td {
+    border: 0;
+    padding: 0;
+}
+
+#map table div {
+    display: block;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+    border-bottom: 1px outset black;
+    border-right: 1px outset black;
+}
+
+/* Map Cells */
+#map .cl_object {
+    position: absolute;
+    display: block;
+    width: 24px;
+    height: 24px;
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+.cl_wall {
+    background-image: url('../img/wall.png');
+}
+
+.cl_empty {
+    background-color: black;
+}
+
+.cl_floor {
+    background-image: url('../img/floor.png');
+}
+
+.cl_junk {
+    background-image: url('../img/junk.png');
+    font-family: monospace;
+    font-size: 8px;
+    line-height: 24px;
+    text-align: right;
+    color: #ffffff;
+}
+
+.cl_junk > span {
+    display: block;
+    margin-top: 8px;
+}
+
+.cl_constructor {
+    background-image: url('../img/constructor.png');
+    text-align: center;
+}
+
+.cl_constructor span {
+    display: block;
+    width: 6px;
+    height: 6px;
+    -webkit-border-radius: 6px;
+    margin-left: 9px;
+    margin-top: 9px;
+}
+
+.cl_machine {
+    background-image: url('../img/machine.png');
+}
+
+.cl_shot {
+    display: none;
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    -webkit-border-radius: 2px;
+    background-color: #FF0000;
+}
+
+.cl_transmission {
+    display: none;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 8px;
+    border: 2px outset #EEEEFF;
+    margin: 0;
+}
+
+.cl_repair {
+    display: none;
+    position: absolute;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+    margin: 0;
+    color: #00FF00;
+}
+
+.cl_scan {
+    display: none;
+    position: absolute;
+    background: -webkit-linear-gradient(left, rgba(0, 255, 0, 0.3) 0%, rgba(0, 255, 0, 1) 100%);
+    -webkit-transform-origin: 100% 100%;
+    width: 4px;
+    height: 33px;
+}
+
+.cl_error {
+    display: none;
+    position: absolute;
+    text-align: center;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 10px;
+    color: #ff0000;
+    width: 50px;
+}
+
+.cl_hourglass {
+    display: none;
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border: 1px outset black;
+    border-radius: 28px;
+    background-color: #A46A88;
+    left: 214px;
+    top: 214px;
+}
+
+.cl_hourglass .maskedCircle {
+    width: 20px;
+    height: 20px;
+    border-radius: 12px;
+    border: 3px outset #743A58;
+}
+
+.cl_hourglass .mask {
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+.cl_hourglass .spinner {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: 26px;
+    height: 26px;
+    -webkit-animation: spin 1s infinite linear;
+}
+
+.cl_code_error {
+    background: #E00;
+    color: #000;
+    font-weight: bold;
+    cursor: text;
+    padding: 0px 5px 0px 5px;
+    margin: 0 3px 0 3px;
+    border-radius: 6px;
+}
+
+/* Map Viewport */
+#map_viewport {
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    top: 185px;
+    left: 510px;
+}
+
+#map_viewport .cl_object {
+    position: absolute;
+    display: block;
+    width: 24px;
+    height: 24px;
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+#map_viewport table {
+    background-color: black;
+    border: 0;
+    padding: 0;
+    border-spacing: 0;
+    border-left: 1px outset black;
+    border-top: 1px outset black;
+}
+
+#map_viewport td {
+    border: 0;
+    padding: 0;
+}
+
+#map_viewport table div {
+    display: block;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+    border-bottom: 1px outset black;
+    border-right: 1px outset black;
+}
+
+/* Map Editor Toolkit */
+#map_toolkit {
+    position: absolute;
+    padding: 2px;
+    left: 510px;
+    right: 0;
+    text-align: center;
+}
+
+#map_toolkit table {
+    margin-left: auto;
+    margin-right: auto;
+    border: 0;
+    padding: 0;
+    border-spacing: 0;
+    background-image: url('../img/floor.png');
+}
+
+#map_toolkit td {
+    border: 0;
+    padding: 0;
+}
+
+#map_toolkit div {
+    display: block;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+    border-width: 1px;
+    border-style: outset;
+    border-color: black;
+}
+
+#map_toolkit div.tlk_btn_sel {
+    border-color: white !important;
+}
+
+/* Map Editor Selector */
+
+#map_selector {
+    padding: 4px 2px 0px 2px;
+    position: absolute;
+    text-align: center;
+    left: 510px;
+    top: 35px;
+    right: 0;
+    min-height: 28px;
+}
+
+#map_selector #map_selector_box {
+    width: 110px;
+}
+
+#map_selector #map_file_name {
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 0;
+    margin: 5px;
+}
+
+/* Simulator Controls */
+#simulator_controls_node {
+    position: absolute;
+    left: 510px;
+    top: 148px;
+    padding: 2px;
+    width: 328px;
+    text-align: center;
+}
+
+#simulator_step_mode {
+    width: 80px;
+    text-align: center;
+}
+
+/* Code Editor */
+
+#simulator_code_node {
+    display: inline-block;
+    position: absolute;
+    padding: 0;
+    top: 240px;
+    left: 260px;
+    z-index: 9;
+}
+
+#simulator_code_node.minimized {
+    left: 510px !important;
+    top: 474px !important;
+    width: 332px;
+    
+}
+
+#simulator_code_node.minimized:hover {
+    border-color: #FFFFFF;
+}
+
+#simulator_code_node.detached {
+    position: absolute;
+    text-align: left;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+}
+
+#simulator_code_node .simulator_code_header {
+    border-bottom: 1px outset #000000;
+    padding: 3px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 24px;
+    height: 24px;
+    color: #FFFFFF;
+    vertical-align: top;
+    cursor: move;
+}
+
+#simulator_code_node.minimized .simulator_code_header {
+    cursor: pointer;
+    text-align: center;
+}
+
+#simulator_code_node.detached .simulator_code_header {
+    cursor: default;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+}
+
+#simulator_code_node a.simulator_code_minimize {
+    float: right;
+    background-image: url('../img/minimize_ico.png');
+    padding: 0;
+    width: 15px; 
+    height: 15px;
+}
+
+#simulator_code_node.minimized a.simulator_code_minimize {
+    display: none;
+}
+
+#simulator_code_node.detached a.simulator_code_minimize {
+    display: none;
+}
+
+#simulator_code_node a.simulator_code_help {
+    float: right;
+    background-image: url('../img/help_ico.png');
+    padding: 0;
+    width: 15px; 
+    height: 15px;
+}
+
+#simulator_code_node.minimized a.simulator_code_help {
+    display: none;
+}
+
+#simulator_code_node a.simulator_code_detach {
+    float: right;
+    display: none;
+    background-image: url('../img/detach_ico.png');
+    padding: 0;
+    width: 15px; 
+    height: 15px;
+}
+
+#simulator_code_node.minimized a.simulator_code_detach {
+    display: none;
+}
+
+#simulator_code_node.detached a.simulator_code_detach {
+    display: none;
+}
+
+#simulator_code_node .simulator_code {
+    width: 570px;
+}
+
+#simulator_code_node.minimized .simulator_code {
+    display: none;
+}
+
+#simulator_code_node.detached .simulator_code {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 31px;
+    bottom: 30px;
+    height: auto !important;
+    width: auto !important;
+}
+
+#simulator_code_node .simulator_code_toolkit {
+    height: 30px;
+    max-height: 30px;
+    line-height: 30px;
+}
+
+#simulator_code_node.minimized .simulator_code_toolkit {
+    display: none;
+}
+
+#simulator_code_node.detached .simulator_code_toolkit {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+#simulator_code_node .simulator_code_resize {
+    float: right;
+    background-image: url('../img/resize_ico.png'); 
+    width: 15px; 
+    height: 15px;
+    margin-top: 15px;
+    cursor: se-resize;
+}
+
+#simulator_code_node.detached .simulator_code_resize {
+    display: none;
+}
+
+#simulator_code_node .simulator_code_header_icon {
+    background-image: url('../img/machine.png');
+    float: left;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
+
+#simulator_code_node .simulator_code_selector {
+    display: inline-block;
+}
+
+#simulator_code_node .simulator_code_save {
+    display: inline-block;
+}
+
+#simulator_code_node .simulator_code_delete {
+    display: inline-block;
+}
+
+/* Simulator Teams */
+
+#simulator_teams_node {
+    position: absolute;
+    left: 510px;
+    display: inline-block;
+    font-family: monospace;
+    color: #FFFFFF;
+    font-size: 12px;
+    line-height: 18px;
+    min-width: 332px;
+    min-height: 142px;
+}
+
+#simulator_teams_node table {
+    border-spacing: 0;
+}
+
+#simulator_teams_node .simulator_teams_team {
+    display: inline-block;
+    border-right: 1px outset #AAAAAA;
+    width: 80px;
+    height: 140px;
+    text-align: center;
+}
+#simulator_teams_node .simulator_team_na {
+    display: block;
+    vertical-align: middle;
+    width: 80px;
+    height: 140px;
+}
+
+#simulator_teams_node .simulator_team_na > p {
+    margin-top: 58px;
+    line-height: 12px;
+    color: #EEEEEE;
+}
+
+#simulator_teams_node .simulator_team_emptySlot {
+    display: block;
+}
+
+#simulator_teams_node .simulator_team_emptySlot > p {
+    margin-top: 38px;
+    line-height: 12px;
+}
+
+#simulator_teams_node .simulator_team_emptySlot .simulator_teams_add_team {
+    display: inline-block;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    background-image: url('../img/machine.png');
+    color: #00CC00;
+}
+#simulator_teams_node .simulator_team_details > div.row {
+    min-height: 20px;
+    max-height: 20px;
+}
+#simulator_teams_node .simulator_teams_icon {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2px;
+    width: 24px;
+    height: 16px;
+    background-image: url('../img/machine.png');
+}
+
+#simulator_teams_node .simulator_team_details > div.header {
+    max-height: 37px;
+    height: 37px;
+}
+
+#simulator_teams_node .simulator_team_details .simulator_teams_edit_team {
+    display: inline-block;
+    padding: 2px;
+    width: 30px;
+    height: 28px;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 10px;
+    vertical-align: top;
+    text-align: center;
+    color: #fff;
+}
+
+#simulator_teams_node .simulator_team_details .simulator_teams_key {
+    display: inline-block;
+    width: 24px;
+    min-height: 16px;
+    max-height: 16px;
+    vertical-align: top;
+}
+
+#simulator_teams_node .simulator_team_details .simulator_teams_health {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #00FF00;
+}
+
+#simulator_teams_node .simulator_team_details .simulator_teams_value {
+    display: inline-block;
+    width: 24px;
+    min-height: 16px;
+    max-height: 16px;
+    margin: 0;
+    vertical-align: top;
+}
+
+#simulator_teams_node .simulator_team_details .simulator_teams_add_machine {
+    background-image: url(../img/machine_add_ico.png);
+    margin-left: auto;
+    margin-right: auto;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+}
+
+#simulator_teams_node .simulator_team_details .simulator_teams_del_machine {
+    background-image: url(../img/machine_del_ico.png);
+    margin-left: auto;
+    margin-right: auto;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+}
+#simulator_teams_node .simulator_team_details .simulator_teams_kill_team {
+    background-image: url(../img/kill_team_ico.png);
+    margin-left: auto;
+    margin-right: auto;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+}
+
+/* Simulator Object Detail */
+
+#simulator_object_detail_node {
+    display: inline-block;
+    position: absolute;
+    top: 185px;
+    left: 645px;
+    width: 193px;
+    min-height: 126px;
+    padding: 2px;
+    -webkit-user-select: none;
+    text-align: center;
+    cursor: default;
+    font-family: monospace;
+    line-height: 12px;
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+#simulator_object_detail_node td {
+    border: 1px outset #AAAAAA;
+}
+
+#simulator_object_detail_node td.machine_detail_key {
+    font-weight: bold;
+    min-width: 85px;
+}
+
+#simulator_object_detail_node td.machine_detail_value {
+    text-align: right;
+    min-width: 94px;
+}
+
+/* Console */
+
+#console_node {
+    display: inline-block;
+    position: absolute;
+    top: 320px;
+    left: 510px;
+    width: 332px;
+    height: 150px;
+    text-align: center;
+}
+
+#console_node > div {
+    display: inline-block;
+    text-align: left;
+    font-family: monospace;
+    font-size: 12px;
+    background-color: #000000;
+    margin: 2px;
+    padding: 2px;
+    width: 322px;
+    height: 140px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#console_node span {
+    display: block;
+    font-weight: bold;
+}
+
+#console_node span.error {
+    color: #FF0000;
+}
+
+#console_node span.system {
+    color: #00AA00;
+}
+
+#console_node span.debug {
+    color: #AAAAAA;
+}
+
+/* Help */
+
+.help {
+    font-family: monospace;
+    font-size: 12px;
+    color: #FFFFFF;
+}
+
+.help h2 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.help ul {
+    list-style-type: none;
+}
+
+.help ul.constants {
+    list-style-type: disc;
+}
+
+.help li > img {
+    vertical-align: middle;
+    float: left;
+    margin-right: 5px;
+}
+
+.help li > a {
+    margin-right: 5px;
+}
+
+.help li {
+    min-height: 26px;
+    margin: 5px 0 5px 0;
+}
+
+.help td,th {
+    border: 1px outset #AAAAAA;
+    padding: 2px;
+}
+
+.help td.first {
+    font-weight: bold;
+    text-align: center;
+}
+
+.help td.third {
+    font-size: 10px;
+}
+
+.help #map_viewport div {
+    text-align: center;
+}
+
+/* Dialog */
+.modal_dialog {
+    width: 100%;
+    height: 100%;
+}
+.modal_dialog div.overlay {
+    position: absolute;
+    display: none;
+    left: 0;
+    top: 0;
+    opacity: 0.5;
+    -webkit-transform: translateZ(0);
+    background-color: #000000;
+    z-index: 99;
+    right: 0;
+    bottom: 0;
+}
+
+.modal_dialog div.box {
+    text-align: center;
+    position: absolute;
+    font-family: monospace;
+    line-height: 12px;
+    color: #FFFFFF;
+    font-size: 12px;
+    left: 50%;
+    top: 50%;
+    margin-left: -128px;
+    margin-top: -48px;
+    width: 256px;
+    height: 96px;
+    z-index: 100;
+    border-radius: 15px;
+}
+
+.modal_dialog div.dialog_btns {
+    height: 28px;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+}
+
+.modal_dialog input, .modal_dialog select {
+    height: 16px;
+    position: absolute;
+    bottom: 37px;
+    left: 12px;
+    right: 12px;
+}
+
+.modal_dialog div.dialog_msg {
+    float: left;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    right: 12px;
+    bottom: 28px;
+}
+
+/* Auth screen */
+
+#auth {
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    font-family: monospace;
+    line-height: 12px;
+    color: #FFFFFF;
+    font-size: 12px;
+    left: 50%;
+    top: 50%;
+    margin-top: -100px;
+    margin-left: -128px;
+    width: 256px;
+}
+
+#auth span {
+    display: inline-block;
+    text-align: right;
+    width: 64px;
+}
+
+#auth_show_login_row, #auth_nickname_row, #auth_register {
+    display: none;
+}
+
+.register #auth_back_row, .register #auth_nickname_row, .register #auth_register, .register #auth_show_login_row {
+    display: inline-block;
+}
+
+.register #auth_login, .register #auth_show_register_row {
+    display: none;
+}
+
+#auth_error_row {
+    color: #FF0000;
+    display: none;
+    font-weight: bold;
+}
+
+#auth a.auth_subscript {
+    display: inline-block;
+    -webkit-user-select: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+/* Chat */
+
+#chat {
+    display: block;
+    position: absolute;
+    left: 0px;
+    right: 146px;
+    bottom: 0;
+    text-align: center;
+    border-top: 2px outset #0000FF;
+}
+
+#chat div.messages {
+    display: block;
+    text-align: left;
+    font-family: monospace;
+    font-size: 12px;
+    background-color: #000000;
+    width: 100%;
+    height: 155px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#chat div.row {
+    display: inline-block;
+    text-align: left;
+    font-family: monospace;
+    font-size: 12px;
+    margin: 1px;
+    height: 25px;
+}
+
+#chat input {
+    margin: 1px;
+    width: 654px;
+}
+
+#chat span {
+    display: block;
+    color: #AAAAAA;
+}
+
+#chat span.system {
+    color: #00AA00;
+}
+
+/* Lobby users list */
+
+#users_list {
+    display: inline-block;
+    position: absolute;
+    border-left: 2px outset #0000FF;
+    padding: 0;
+    margin: 0;
+    top: 0px;
+    left: 700px;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+}
+
+#users_list div.users {
+    display: block;
+    text-align: left;
+    font-family: monospace;
+    font-size: 12px;
+    background-color: #000000;
+    color: #AAAAAA;
+    margin-left: 2px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#users_list span {
+    display: block;
+}
+
+/* Lobby rooms list */
+
+#rooms_list {
+    display: inline-block;
+    background-color: red;
+    position: absolute;
+    border: none;
+    padding: 0;
+    margin: 0;
+    top: 0px;
+    left: 0;
+    right: 146px;
+    bottom: 184px;
+    text-align: center;
+}
+
+#rooms_list div.panel {
+    text-align: left;
+}
+
+#rooms_list div.rooms {
+    display: block;
+    text-align: left;
+    font-family: monospace;
+    font-size: 12px;
+    background-color: yellow;
+    color: #AAAAAA;
+    margin-left: 2px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
