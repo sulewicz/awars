@@ -449,8 +449,8 @@ a:hover.button.disabled {
     display: inline-block;
     position: absolute;
     padding: 0;
-    top: 340px;
-    left: 510px;
+    top: 240px;
+    left: 260px;
     z-index: 9;
 }
 
@@ -547,7 +547,7 @@ a:hover.button.disabled {
 }
 
 #simulator_code_node .simulator_code {
-    width: 670px;
+    width: 570px;
 }
 
 #simulator_code_node.minimized .simulator_code {
@@ -560,24 +560,6 @@ a:hover.button.disabled {
     right: 0;
     top: 31px;
     bottom: 30px;
-    height: auto !important;
-    width: auto !important;
-}
-
-#simulator_code_node.detached .simulator_code .CodeMirror {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-#simulator_code_node.detached .simulator_code .CodeMirror-scroll {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
     height: auto !important;
     width: auto !important;
 }

@@ -77,6 +77,7 @@ aw.CodeEditorUi = (function() {
                     value: SAMPLE_CODE, 
                     lineNumbers: true, 
                     autofocus: true,
+                    viewportMargin: Infinity,
                     mode: 'javascript'
                 });
 
@@ -137,11 +138,11 @@ aw.CodeEditorUi = (function() {
             self.code_resize_node.addEventListener('mousedown', function(e) {
                 function move(e) {
                     var x = (pos[2] + e.pageX - pos[0]), y = (pos[3] + e.pageY - pos[1]);
-                    if (x >= 220) {
+                    if (x >= 400) {
                         self.code_editor_node.style.width = x + 'px';
                         self.code_mirror_scroll.style.width = x + 'px';
                     }
-                    if (y >= 75) {
+                    if (y >= 200) {
                         self.code_editor_node.style.height = y + 'px';
                         self.code_mirror_scroll.style.height = y + 'px';
                     }
