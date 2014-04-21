@@ -42,7 +42,7 @@ aw.Sandbox = (function() {
                 try {
                     return eval(code);
                 } catch (e) {
-                    return (function() { var global = {}; return { main: function() { global.__ops.push('error', { msg: e.message }); }, global: global}; })()
+                    return (function() { var global = {}, robot = {}; return { main: function() { global.__ops.push('error', { msg: e.message }); }, global: global, robot: robot }; })()
                 }
             })(code);
         }
