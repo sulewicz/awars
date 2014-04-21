@@ -16,17 +16,6 @@ aw.VM = (function() {
         __name: 'VM',
         constructor: VM,
 
-        compile: function(code_src) {
-            var fullCode = '(function() { var global = {};' + this.ctx_factory.createGlobals() + 'return { main: ' + code_src + ', global: global}; })()';
-            return (function(fullCode, errorCode) {
-                try {
-                    return eval(fullCode);
-                } catch (e) {
-                    return (function() { var global = {}; return { main: function() { global.ops.push('error', { msg: e.message }); }, global: global}; })()
-                }
-            })(fullCode);
-        },
-
         tick: function(stepMode, overrideTeamIdx, overrideMachineIdx) {
             var self = this, team, machine, last;
             // TODO: make sure that turnEnd and turnStart is called when explicitly defining team and machine
