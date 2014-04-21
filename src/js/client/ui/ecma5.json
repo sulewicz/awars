@@ -1,6 +1,72 @@
 {
   "!name": "ecma5",
-  "!define": {"Error.prototype": "Error.prototype"},
+  "!define": {
+    "Error.prototype": "Error.prototype"
+  },
+  "FRONT": {
+    "!type": "number",
+    "!doc": "Front direction, used for move and turn action."
+  },
+  "RIGHT": {
+    "!type": "number",
+    "!doc": "Right direction, used for move and turn action."
+  },
+  "BACK": {
+    "!type": "number",
+    "!doc": "Back direction, used for move and turn action."
+  },
+  "LEFT": {
+    "!type": "number",
+    "!doc": "Left direction, used for move and turn action."
+  },
+  "move": {
+    "!type": "fn(dir: number)",
+    "!doc": "Basic function used for moving the robot around the map. Possible arguments are FRONT, RIGHT, BACK or LEFT. Costs 1 AP."
+  },
+  "turn": {
+    "!type": "fn(dir: number)",
+    "!doc": "Basic function used for turning the robot in a particular direction. Possible arguments are FRONT, RIGHT, BACK or LEFT. Costs 1 AP."
+  },
+  "melt": {
+    "!type": "fn()",
+    "!doc": "This will command the machine to melt the wall in front of it. Costs 1 AP."
+  },
+  "fire": {
+    "!type": "fn()",
+    "!doc": "Machine will fire its laser in front of it. The range of the laser are 3 tiles. One shot takes 25 HP. Costs 1 AP."
+  },
+  "hit": {
+    "!type": "fn()",
+    "!doc": "Robot will do a meele attack. The range is of course one tile. One hit takes 50 HP. Costs 1 AP."
+  },
+  "build": {
+    "!type": "fn()",
+    "!doc": "The machine will build a wall in front of itself, if the tile is not occupied by anything else already. Costs 5 resources. Costs 2 AP."
+  },
+  "scan": {
+    "!type": "fn()",
+    "!doc": "This will trigger a scan of the environment. Next turn the machine can check the result of the scan in this.scan_result field. Costs 2 AP."
+  },
+  "transmit": {
+    "!type": "fn(msg: string)",
+    "!doc": "This function will transmit a messages to fellow robots. Acceptable argument is a string only, the maximal possible length of the string is 64. Costs 1 AP."
+  },
+  "convert": {
+    "!type": "fn()",
+    "!doc": "The robot will attempt to convert the enemy machine in front of it on its own side. The chances of succesfull convertion are 33%. Costs 2 AP."
+  },
+  "replicate": {
+    "!type": "fn()",
+    "!doc": "If the team has enough resources, the constructor will produce a new robot. This costs 100 resources. Maximal number of machines in the team is 20. Please note that machine may not be created if all tiles around the constructor are occupied, however in such case resources won't be subtracted. Costs 3 AP."
+  },
+  "repair": {
+    "!type": "fn()",
+    "!doc": "If the team has enough resources, the machine will aut-repair itself and regain hit points. The cost of repair is 30 resources. Costs 2 AP."
+  },
+  "log": {
+    "!type": "fn(msg: string)",
+    "!doc": "This function is available for debug purpose only. It costs no AP and is available only in the Simulator environment (in online game this operation is a no-op). The message passed to this function will be displayed in the console widget."
+  },
   "Infinity": {
     "!type": "number",
     "!url": "https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Infinity",
