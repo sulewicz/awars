@@ -13,37 +13,37 @@ aw.ContextFactory = (function() {
         var AP_SPEC = aw.Constants.AP_SPEC;
         
         var move =  function(dir) {
-            global.ops.push('move', dir);
+            global.__ops.push('move', dir);
         };
         var turn = function(dir) {
-            global.ops.push('turn', dir);
+            global.__ops.push('turn', dir);
         };
         var melt = function() {
-            global.ops.push('melt');
+            global.__ops.push('melt');
         };
         var fire = function() {
-            global.ops.push('fire');
+            global.__ops.push('fire');
         };
         var hit = function() {
-            global.ops.push('hit');
+            global.__ops.push('hit');
         };
         var build = function() {
-            global.ops.push('build');
+            global.__ops.push('build');
         };
         var scan = function() {
-            global.ops.push('scan');
+            global.__ops.push('scan');
         };
         var convert = function() {
-            global.ops.push('convert');
+            global.__ops.push('convert');
         };
         var replicate = function() {
-            global.ops.push('replicate');
+            global.__ops.push('replicate');
         };
         var repair = function() {
-            global.ops.push('repair');
+            global.__ops.push('repair');
         };
         var log = function(msg) {
-            global.ops.push('log', msg);
+            global.__ops.push('log', msg);
         };
         
         

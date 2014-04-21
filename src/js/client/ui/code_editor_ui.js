@@ -20,11 +20,11 @@ aw.CodeEditorUi = (function() {
         + '</html>';
     
     var SAMPLE_CODE = 'function() {\n'
-        + '  if (this.view.front.indexOf(ENEMY_MACHINE) != -1 ||\n'
-        + '      this.view.front.indexOf(ENEMY_CONSTRUCTOR) != -1) {\n'
+        + '  if (robot.view.front.indexOf(ENEMY_MACHINE) != -1 ||\n'
+        + '      robot.view.front.indexOf(ENEMY_CONSTRUCTOR) != -1) {\n'
         + '    fire();\n'
         + '    fire();\n'
-        + '  } else if (this.view.front[0] !== FLOOR && this.view.front[0] !== JUNK) {\n'
+        + '  } else if (robot.view.front[0] !== FLOOR && robot.view.front[0] !== JUNK) {\n'
         + '    turn(RIGHT);\n'
         + '  }\n'
         + '  move(FRONT);\n'

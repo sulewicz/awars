@@ -75,7 +75,7 @@
         This will be the function that will be executed for all machines of your team. You are of course free to define everything you want inside the body of this function.
     </p>
     <h2>Machine context</h2>
-    <p>The mentioned function is executed in the context of a particular machine, so it is possible to access its properties via the <b>this</b> reference, these are the properties currently available.</p>
+    <p>The robot context can be accessed via "robot" global. Additionally, please note that the context of the function (this) is shared between robots of the same team and persistent across turns. These are the properties currently accessible via "robot" global.</p>
     <table>
         <tr><th>Property</th><th>Description</th><th>Values</th></tr>
         <tr><td class="first">hp</td><td class="second">This are the current hit points of the machine. When it reaches 0 the machine blows up.</td><td class="third">0 - 100</td></tr>

@@ -6,6 +6,29 @@ aw.Sandbox = (function() {
     var ERROR_OFFSET = 22;
     var TIMEOUT = 2000;
 
+    function clearObject(obj) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                delete obj[key];
+            }
+        }
+    }
+
+    function mixin(dst) {
+        if (arguments.length === 1) {
+            return dst;
+        }
+        var obj = dst;
+        for (var i = arguments.length - 1; i >= 1; --i) {
+            for (var o in arguments[i]) {
+                if (arguments[i].hasOwnProperty(o)) {
+                    obj[o] = arguments[i][o];
+                }
+            }
+        }
+        return obj;
+    }
+
     var Sandbox = function(sandbox) {
         var self = this;
 
@@ -19,7 +42,7 @@ aw.Sandbox = (function() {
                 try {
                     return eval(code);
                 } catch (e) {
-                    return (function() { var global = {}; return { main: function() { global.ops.push('error', { msg: e.message }); }, global: global}; })()
+                    return (function() { var global = {}; return { main: function() { global.__ops.push('error', { msg: e.message }); }, global: global}; })()
                 }
             })(code);
         }
@@ -69,13 +92,15 @@ aw.Sandbox = (function() {
         self.invoke = invoke;
 
         function invokeSandbox(ctx) {
-            self.logic.global.ops = [];
+            self.logic.global.__ops = [];
+            clearObject(self.logic.robot);
+            mixin(self.logic.robot, ctx);
             try {
-                self.logic.main.call(ctx);
+                self.logic.main.call(self.logic.global, ctx);
             } catch (e) {
-                self.logic.global.ops = ['error', { msg: e.message, line: (0 | e.stack.match(/<anonymous>:([0-9]+):[0-9]+/)[1]) - ERROR_OFFSET }];
+                self.logic.global.__ops = ['error', { msg: e.message, line: (0 | e.stack.match(/<anonymous>:([0-9]+):[0-9]+/)[1]) - ERROR_OFFSET }];
             }
-            return self.logic.global.ops;
+            return self.logic.global.__ops;
         }
 
         self.sandbox = !!sandbox;

@@ -1,7 +1,85 @@
 {
   "!name": "ecma5",
   "!define": {
-    "Error.prototype": "Error.prototype"
+    "Error.prototype": "Error.prototype",
+    "scan_result_type": {
+      "object": {
+        "!type": "number",
+        "!doc": "Type of the object."
+      },
+      "distance": {
+        "!type": "number",
+        "!doc": "Distance to the object in tiles."
+      },
+      "dir": {
+        "!type": "number",
+        "!doc": "Direction of the object."
+      }
+    }
+  },
+  "FLOOR": {
+    "!type": "number",
+    "!doc": "Constant for the FLOOR tile."
+  },
+  "WALL": {
+    "!type": "number",
+    "!doc": "Constant for the WALL tile."
+  },
+  "CONSTRUCTOR": {
+    "!type": "number",
+    "!doc": "Constant for the CONSTRUCTOR tile."
+  },
+  "ENEMY_CONSTRUCTOR": {
+    "!type": "number",
+    "!doc": "Constant for the ENEMY_CONSTRUCTOR tile."
+  },
+  "MACHINE": {
+    "!type": "number",
+    "!doc": "Constant for the MACHINE tile."
+  },
+  "ENEMY_MACHINE": {
+    "!type": "number",
+    "!doc": "Constant for the ENEMY_MACHINE tile."
+  },
+  "JUNK": {
+    "!type": "number",
+    "!doc": "Constant for the JUNK tile."
+  },
+  "HIT_HP": {
+    "!type": "number",
+    "!doc": "Constant for the HP taken by hit action."
+  },
+  "FIRE_HP": {
+    "!type": "number",
+    "!doc": "Constant for the HP taken by fire action."
+  },
+  "FIRE_RANGE": {
+    "!type": "number",
+    "!doc": "Constant for the range of fire in tiles."
+  },
+  "MACHINE_VALUE": {
+    "!type": "number",
+    "!doc": "Constant for the value of the junk that will be dropped after destroying enemy machine."
+  },
+  "CONSTRUCTOR_VALUE": {
+    "!type": "number",
+    "!doc": "Constant for the value of the junk that will be dropped after destroying enemy constructor."
+  },
+  "WALL_VALUE": {
+    "!type": "number",
+    "!doc": "Constant for the value of the junk that will be dropped after melting a wall tile."
+  },
+  "MACHINE_COST": {
+    "!type": "number",
+    "!doc": "Number of the resources that will be subtracted after replicating a new machine."
+  },
+  "WALL_COST": {
+    "!type": "number",
+    "!doc": "Number of the resources that will be subtracted after creating a wall tile."
+  },
+  "REPAIR_COST": {
+    "!type": "number",
+    "!doc": "Number of the resources that will be subtracted after repairing a machine."
   },
   "FRONT": {
     "!type": "number",
@@ -62,6 +140,42 @@
   "log": {
     "!type": "fn(msg: string)",
     "!doc": "This function is available for debug purpose only. It costs no AP and is available only in the Simulator environment (in online game this operation is a no-op). The message passed to this function will be displayed in the console widget."
+  },
+  "robot": {
+    "hp": {
+      "!type": "number",
+      "!doc": "This are the current hit points of the machine. When it reaches 0 the machine blows up."
+    },
+    "time": {
+      "!type": "number",
+      "!doc": "This variable allows you to check the passage of time. It gets incremented every team's turn."
+    },
+    "scan_result": {
+      "!type": "[scan_result_type]",
+      "!doc": "This field is available only if the robot issues a scan command during his previous turn. It contains the information about objects in its surrounding, even if they are not visible. It does not contain exact coordinates though, instead only the distance from the object and direction where is it located."
+    },
+    "machines_count": {
+      "!type": "number",
+      "!doc": "Number of the machines in the robot's team."
+    },
+    "resources": {
+      "!type": "number",
+      "!doc": "Number of the resources available for your team."
+    },
+    "view": {
+      "left": {
+        "!type": "[number]",
+        "!doc": "Array of tiles in left-front side of the machine (check the help for illustration)."
+      },
+      "front": {
+        "!type": "[number]",
+        "!doc": "Array of tiles in front side of the machine (check the help for illustration)."
+      },
+      "right": {
+        "!type": "[number]",
+        "!doc": "Array of tiles in right-front side of the machine (check the help for illustration)."
+      }
+    }
   },
   "Infinity": {
     "!type": "number",
