@@ -19,16 +19,14 @@ aw.CodeEditorUi = (function() {
         + '</body>'
         + '</html>';
     
-    var SAMPLE_CODE = 'function() {\n'
-        + '  if (robot.view.front.indexOf(ENEMY_MACHINE) != -1 ||\n'
-        + '      robot.view.front.indexOf(ENEMY_CONSTRUCTOR) != -1) {\n'
-        + '    fire();\n'
-        + '    fire();\n'
-        + '  } else if (robot.view.front[0] !== FLOOR && robot.view.front[0] !== JUNK) {\n'
-        + '    turn(RIGHT);\n'
-        + '  }\n'
-        + '  move(FRONT);\n'
-        + '}\n';
+    var SAMPLE_CODE = 'if (robot.view.front.indexOf(ENEMY_MACHINE) != -1 ||\n'
+        + '    robot.view.front.indexOf(ENEMY_CONSTRUCTOR) != -1) {\n'
+        + '  fire();\n'
+        + '  fire();\n'
+        + '} else if (robot.view.front[0] !== FLOOR && robot.view.front[0] !== JUNK) {\n'
+        + '  turn(RIGHT);\n'
+        + '}\n'
+        + 'move(FRONT);\n';
         
     var CODE_CHANGED_EVENT = "code_changed_event";
     

@@ -65,17 +65,14 @@
     <h2>How to code</h2>
     <p>Now the most important thing: how to create an actual code?<br>
         The language that we are using for coding is JavaScript, pure JavaScript.
-        The top most object in your code must be a function, for example:
+        Here is a simple "Hello world!".
         <pre>
-            function() {
-                turn(RIGHT);
-                move(BACK);
-            }
+            turn(RIGHT);
+            move(FRONT);
         </pre>
-        This will be the function that will be executed for all machines of your team. You are of course free to define everything you want inside the body of this function.
-    </p>
+        This will be the code that will be executed for all machines of your team. You are of course free to define everything you want in your code. Please note that the context of the code (this) is shared between robots of the same team and persistent across turns.</p>
     <h2>Machine context</h2>
-    <p>The robot context can be accessed via "robot" global. Additionally, please note that the context of the function (this) is shared between robots of the same team and persistent across turns. These are the properties currently accessible via "robot" global.</p>
+    <p>The robot context can be accessed via "robot" global, these are the available properties:</p>
     <table>
         <tr><th>Property</th><th>Description</th><th>Values</th></tr>
         <tr><td class="first">hp</td><td class="second">This are the current hit points of the machine. When it reaches 0 the machine blows up.</td><td class="third">0 - 100</td></tr>

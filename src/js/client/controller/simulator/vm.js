@@ -65,7 +65,7 @@ aw.VM = (function() {
             if (!self.sandboxes[i]) {
                 self.sandboxes[i] = new aw.Sandbox();
             }
-            var fullCode = '(function() { var global = {}, robot = {};' + self.ctx_factory.createGlobals() + 'return { main: ' + codeSrc + ', global: global, robot: robot }; })()';
+            var fullCode = '(function() { var global = {}, robot = {};' + self.ctx_factory.createGlobals() + 'return { main: function() {' + codeSrc + '} , global: global, robot: robot }; })()';
             self.sandboxes[i].init(fullCode);
         },
         
