@@ -47,10 +47,6 @@ Currently the robots can perform following operations:
  * scan
    
    This will trigger a scan of the environment. Next turn the machine can check the result of the scan in this.scan_result field.
-
- * transmit
- 
-   This function will transmit a messages to fellow robots. Acceptable argument is a string only, the maximal possible length of the string is 64.
    
  * convert	
  

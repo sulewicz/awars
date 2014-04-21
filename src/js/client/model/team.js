@@ -10,7 +10,6 @@ aw.Team = (function() {
         self.machines = [];
         self.constructors = [];
         self.resources = aw.Constants.START_RESOURCES;
-        self.transmissions = {};
         self.time = 0;
     }
 
@@ -25,26 +24,6 @@ aw.Team = (function() {
         turnEnd: function() {
             var self = this;
             self.time++;
-        },
-
-        startTransmission: function(machine_id, msg) {
-            var self = this;
-            self.transmissions[machine_id] = msg;
-        },
-
-        stopTransmission: function(machine_id) {
-            var self = this;
-            delete self.transmissions[machine_id];
-        },
-
-        getTransmissions: function() {
-            var self = this, ret = [];
-            for (machine_id in self.transmissions) {
-                if (self.transmissions.hasOwnProperty(machine_id)) {
-                    ret.push(self.transmissions[machine_id]);
-                }
-            }
-            return ret;
         },
 
         getHP: function() {

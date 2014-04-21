@@ -114,7 +114,6 @@ aw.ContextFactory = (function() {
         self.createContext = function(machine) {
             return {
                 time: machine.team.time,
-                transmissions: machine.team.getTransmissions(),
                 scan_result: machine.scan_result,
                 hp: machine.hp,
                 machines_count: machine.team.machines.length,
@@ -124,7 +123,7 @@ aw.ContextFactory = (function() {
         },
         
         self.getLocals = function() {
-            return [ 'time', 'transmissions', 'scan_result', 'hp', 'machines_count', 'resources', 'view' ].sort();
+            return [ 'time', 'scan_result', 'hp', 'machines_count', 'resources', 'view' ].sort();
         }
         
         self.getGlobals = function() {

@@ -31,7 +31,6 @@ aw.Machine = (function() {
 
         turnStart: function() {
             var self = this;
-            self.team.stopTransmission(self.id);
         },
 
         turnEnd: function() {

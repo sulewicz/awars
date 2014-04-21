@@ -47,10 +47,6 @@
     "!type": "fn()",
     "!doc": "This will trigger a scan of the environment. Next turn the machine can check the result of the scan in this.scan_result field. Costs 2 AP."
   },
-  "transmit": {
-    "!type": "fn(msg: string)",
-    "!doc": "This function will transmit a messages to fellow robots. Acceptable argument is a string only, the maximal possible length of the string is 64. Costs 1 AP."
-  },
   "convert": {
     "!type": "fn()",
     "!doc": "The robot will attempt to convert the enemy machine in front of it on its own side. The chances of succesfull convertion are 33%. Costs 2 AP."

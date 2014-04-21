@@ -80,7 +80,6 @@
         <tr><th>Property</th><th>Description</th><th>Values</th></tr>
         <tr><td class="first">hp</td><td class="second">This are the current hit points of the machine. When it reaches 0 the machine blows up.</td><td class="third">0 - 100</td></tr>
         <tr><td class="first">time</td><td class="second">This variable allows you to check the passage of time. It gets incremented every team's turn.</td><td class="third">0 - +INF</td></tr>
-        <tr><td class="first">transmissions</td><td class="second">This is an array of all the messages transmitted by your robots. The messages are strings only. If nothing is currently transmitted, the array will be empty.</td><td class="third">[m1, m2, ..., mN]</td></tr>
         <tr><td class="first">scan_result</td><td class="second">This field is available only if the robot issues a <b>scan</b> command during his previous turn. 
             It contains the information about objects in its surrounding, even if they are not visible. 
             It does not contain exact coordinates though, instead only the distance from the object and direction where is it located.</td><td class="third">[<br>
@@ -133,7 +132,6 @@
         <tr><td class="first">hit</td><td class="second">Robot will do a meele attack. The range is of course one tile. One hit takes 50 HP.</td><td class="third">hit();</td><td>1</td></tr>
         <tr><td class="first">build</td><td class="second">The machine will build a wall in front of itself, if the tile is not occupied by anything else already. Costs 5 resources.</td><td class="third">build();</td><td>2</td></tr>
         <tr><td class="first">scan</td><td class="second">This will trigger a scan of the environment. Next turn the machine can check the result of the scan in <b>this.scan_result</b> field.</td><td class="third">scan();</td><td>2</td></tr>
-        <tr><td class="first">transmit</td><td class="second">This function will transmit a messages to fellow robots. Acceptable argument is a string only, the maximal possible length of the string is 64.</td><td class="third">transmit("message1");</td><td>1</td></tr>
         <tr><td class="first">convert</td><td class="second">The robot will attempt to convert the enemy machine in front of it on its own side. The chances of succesfull convertion are 33%.</td><td class="third">convert();</td><td>2</td></tr>
         <tr><td class="first">replicate</td><td class="second">If the team has enough resources, the constructor will produce a new robot. This costs 100 resources. Maximal number of machines in the team is 20. Please note that machine may not be created if all tiles around the constructor are occupied, however in such case resources won't be subtracted.</td><td class="third">replicate();</td><td>3</td></tr>
         <tr><td class="first">repair</td><td class="second">If the team has enough resources, the machine will aut-repair itself and regain hit points. The cost of repair is 30 resources.</td><td class="third">repair();</td><td>2</td></tr>
