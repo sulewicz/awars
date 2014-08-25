@@ -18,7 +18,7 @@ Packaged binaries of AsciiWar will be available soon.
 
 The main goal of the game is to code a team of robots that will help them achieve victory. Your team of robots can win in two ways: destroy all other machines or destroy their constructors, which will instruct the machines to self-destruct!
 
-**Please check [**src/help.html**](http://htmlpreview.github.io/?http://github.com/sulewicz/awars/blob/standalone/src/help.html) file for detailed instructions.**
+**Please check [**src/help.html**](http://htmlpreview.github.io/?https://github.com/sulewicz/awars/blob/master/src/help.html) file for detailed instructions.**
 
 <div align="center"><img src="./img/screen3.png" alt="Screen 3"></div>
 <div align="center"><img src="./img/screen4.png" alt="Screen 4"></div>
