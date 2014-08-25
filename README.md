@@ -1,4 +1,4 @@
-# AsciiWars
+# AsciiWar
 
 #### About the project
 
@@ -9,7 +9,7 @@ Server-side, the second part of the project, is still in progress.
 #### How to run
 
 This project uses [node-webkit](https://github.com/rogerwang/node-webkit). To run the app you will have to download the node-webkit binary and launch it with the *src* directory as a parameter (as it contains package.json file).
-Packaged binaries of AciiWars will be available soon.
+Packaged binaries of AsciiWar will be available soon.
 
 <div align="center"><img src="./img/screen1.png" alt="Screen 1"></div>
 <div align="center"><img src="./img/screen2.png" alt="Screen 2"></div>
