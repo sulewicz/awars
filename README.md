@@ -11,11 +11,17 @@ Server-side, the second part of the project, is still in progress.
 This project uses [node-webkit](https://github.com/rogerwang/node-webkit). To run the app you will have to download the node-webkit binary and launch it with the *src* directory as a parameter (as it contains package.json file).
 Packaged binaries of AciiWars will be available soon.
 
+<div align="center"><img src="./img/screen1.png" alt="Screen 1"></div>
+<div align="center"><img src="./img/screen2.png" alt="Screen 2"></div>
+
 #### How to Play
 
 The main goal of the game is to code a team of robots that will help them achieve victory. Your team of robots can win in two ways: destroy all other machines or destroy their constructors, which will instruct the machines to self-destruct!
 
 **Please check [**src/help.html**](http://htmlpreview.github.io/?http://github.com/sulewicz/awars/blob/standalone/src/help.html) file for detailed instructions.**
+
+<div align="center"><img src="./img/screen3.png" alt="Screen 3"></div>
+<div align="center"><img src="./img/screen4.png" alt="Screen 4"></div>
 
 #### What the robots can do?
 
